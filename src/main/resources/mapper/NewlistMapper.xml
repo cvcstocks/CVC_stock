@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stock.mx2.dao.NewlistMapper">
+    <select id="selectSubPriceByCodeAndPhone" resultType="java.math.BigDecimal">
+
+
+        select sum(IFNULL(sub_price,0)) from lists where codes = #{code} and phone = #{phone}  and zts in (4,5)
+    </select>
+    <select id="selectDeepPurchase" resultType="java.math.BigDecimal">
+
+        select sum(IFNULL(add_price,0)) from club_log where log_status =2 and phone = #{phone}
+    </select>
+    <select id="selectDeepProfitAndLoss" resultType="java.math.BigDecimal">
+
+            select sum(IFNULL(loss_price,0)) from club_log where log_status =2 and phone = #{phone}
+    </select>
+    <select id="selectDeep" resultType="java.math.BigDecimal">
+
+                select sum(IFNULL(add_price,0)) from club_log where log_status =1 and phone = #{phone}
+    </select>
+</mapper>

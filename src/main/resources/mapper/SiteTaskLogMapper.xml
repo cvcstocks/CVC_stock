@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.stock.mx2.dao.SiteTaskLogMapper" >
+  <resultMap id="BaseResultMap" type="com.stock.mx2.pojo.SiteTaskLog" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="task_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="task_cnt" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="task_target" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_success" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="error_msg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="add_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, task_type, task_cnt, task_target, is_success, error_msg, add_time
+  </sql>
+  <select id="selectByPrimaryKey"  resultType="com.stock.mx2.pojo.SiteTaskLog" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from site_task_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from site_task_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.stock.mx2.pojo.SiteTaskLog" >
+    insert into site_task_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="taskType != null" >
+        task_type,
+      </if>
+      <if test="taskCnt != null" >
+        task_cnt,
+      </if>
+      <if test="taskTarget != null" >
+        task_target,
+      </if>
+      <if test="isSuccess != null" >
+        is_success,
+      </if>
+      <if test="errorMsg != null" >
+        error_msg,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="taskType != null" >
+        #{taskType,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCnt != null" >
+        #{taskCnt,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTarget != null" >
+        #{taskTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null" >
+        #{isSuccess,jdbcType=INTEGER},
+      </if>
+      <if test="errorMsg != null" >
+        #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stock.mx2.pojo.SiteTaskLog" >
+    update site_task_log
+    <set >
+      <if test="taskType != null" >
+        task_type = #{taskType,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCnt != null" >
+        task_cnt = #{taskCnt,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTarget != null" >
+        task_target = #{taskTarget,jdbcType=VARCHAR},
+      </if>
+      <if test="isSuccess != null" >
+        is_success = #{isSuccess,jdbcType=INTEGER},
+      </if>
+      <if test="errorMsg != null" >
+        error_msg = #{errorMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stock.mx2.pojo.SiteTaskLog" >
+    update site_task_log
+    set task_type = #{taskType,jdbcType=VARCHAR},
+      task_cnt = #{taskCnt,jdbcType=VARCHAR},
+      task_target = #{taskTarget,jdbcType=VARCHAR},
+      is_success = #{isSuccess,jdbcType=INTEGER},
+      error_msg = #{errorMsg,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+  <select id="taskList" parameterType="string" resultType="com.stock.mx2.pojo.SiteTaskLog">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM site_task_log
+    <where>
+
+      <if test="taskType != null and taskType != '' ">
+        task_type = #{taskType}
+      </if>
+      <if test="keywork != null and keywork != '' ">
+      and  task_target like  CONCAT('%','${keywork}','%')
+      </if>
+    </where>
+    order by id desc
+  </select>
+
+
+
+</mapper>

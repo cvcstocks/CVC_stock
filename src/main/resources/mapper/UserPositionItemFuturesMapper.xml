@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stock.mx2.dao.UserPositionItemFuturesMapper">
+
+    <select id="listByAgent" resultType="com.stock.mx2.pojo.UserPositionItemFutures">
+            SELECT
+            *
+            FROM user_position_item_futures
+            where agent_id != 1
+            <if test="buyType != null  ">
+                and buy_type = #{buyType}
+            </if>
+            <if test="searchId != null  ">
+                and ( agent_id = #{searchId}
+                or agent_id in (
+                select agent_user.id
+                FROM agent_user
+                where parent_id = ${searchId}
+                )
+                )
+            </if>
+            <if test="state != null  ">
+                <if test="state == 0">
+                    and order_type = 0
+                </if>
+                <if test="state == 1">
+                    and order_type = 1
+                </if>
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId}
+            </if>
+            <if test="positionSn != null and positionSn != '' ">
+                and position_sn like CONCAT('%','${positionSn}','%')
+            </if>
+            <if test="positionType != null ">
+                and position_type = #{positionType}
+            </if>
+            <if test="beginTime != null ">
+                and order_time <![CDATA[>=]]> #{beginTime}
+            </if>
+            <if test="endTime != null ">
+                and order_time <![CDATA[<=]]> #{endTime}
+            </if>
+            ORDER BY id DESC
+
+    </select>
+</mapper>
