@@ -133,10 +133,10 @@ public class UserPositionServiceImpl implements IUserPositionService {
         c.setTime(today);
         int weekday = c.get(Calendar.DAY_OF_WEEK);
         if (weekday == 1) {
-//            return ServerResponse.createByErrorMsg("非工作日，不可交易！");
+            return ServerResponse.createByErrorMsg("非工作日，不可交易！");
         }
         if (weekday == 7) {
-//            return ServerResponse.createByErrorMsg("非工作日，不可交易！");
+            return ServerResponse.createByErrorMsg("非工作日，不可交易！");
         }
         String mMdd = DateUtil.format(new Date(), "MMdd");
         if ("0909".equals(mMdd) || "0910".equals(mMdd)) {
@@ -211,7 +211,7 @@ public class UserPositionServiceImpl implements IUserPositionService {
         boolean am_flag = BuyAndSellUtils.isTransTime(am_begin, am_end);
         log.info("是否在上午交易時間 = {}", Boolean.valueOf(am_flag));
         if (!am_flag) {
-//            return ServerResponse.createByErrorMsg("下單失敗，不在交易時段內");
+            return ServerResponse.createByErrorMsg("下單失敗，不在交易時段內");
         }
 
         Stock stock = null;
@@ -528,7 +528,7 @@ public class UserPositionServiceImpl implements IUserPositionService {
             boolean am_flag = BuyAndSellUtils.isTransTime(am_begin, am_end);
             log.info("是否在上午交易時間 = {} ", am_flag);
             if (!am_flag) {
-//                return ServerResponse.createByErrorMsg("平倉失敗，不在交易時段內");
+                return ServerResponse.createByErrorMsg("平倉失敗，不在交易時段內");
             }
 
             // 判斷周末不能買
@@ -537,10 +537,10 @@ public class UserPositionServiceImpl implements IUserPositionService {
             c.setTime(today);
             int weekday = c.get(Calendar.DAY_OF_WEEK);
             if (weekday == 1) {
-//                return ServerResponse.createByErrorMsg("非工作日，不可交易！");
+                return ServerResponse.createByErrorMsg("非工作日，不可交易！");
             }
             if (weekday == 7) {
-//                return ServerResponse.createByErrorMsg("非工作日，不可交易！");
+                return ServerResponse.createByErrorMsg("非工作日，不可交易！");
             }
             String mMdd = DateUtil.format(new Date(), "MMdd");
             if ("0909".equals(mMdd) || "0910".equals(mMdd)) {
