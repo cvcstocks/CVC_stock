@@ -1235,6 +1235,9 @@ public class UserPositionServiceImpl implements IUserPositionService {
     public ServerResponse listByAdmin(Integer sum, String sort, String sortColmn, Integer agentId, Integer positionType, Integer state, Integer userId, String positionSn, String beginTime, String endTime, int pageNum, int pageSize, Integer buyType) {
 
 
+        if(state== null){
+            state = 0;
+        }
         Timestamp begin_time = null;
         if (StringUtils.isNotBlank(beginTime)) {
             begin_time = DateTimeUtil.searchStrToTimestamp(beginTime);
